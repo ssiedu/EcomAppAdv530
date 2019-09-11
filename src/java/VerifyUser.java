@@ -1,63 +1,55 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SaveUser extends HttpServlet {
+public class VerifyUser extends HttpServlet {
 
-    private Connection con;
-    private PreparedStatement ps;
-    
-    public void init(){
-        try{
-            con=Data.connect();
-            String sql="insert into users values(?,?,?,?,?)";
-            ps=con.prepareStatement(sql);        
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    public void destroy(){
-        try{
-            con.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         
-        PrintWriter out=response.getWriter();
+        String email=request.getParameter("email");
+        String password=request.getParameter("password");
+        String utype=request.getParameter("utype");
         
-        //reads the request
-        String s1=request.getParameter("email");
-        String s2=request.getParameter("password");
-        String s3=request.getParameter("name");
-        String s4=request.getParameter("address");
-        String s5=request.getParameter("mobile");
-        //process the request
-        try{
+        if(utype.equals("admin")){
+            if(email.equals("admin@gmail.com") && password.equals("indore")){
+              response.sendRedirect("adminpage.jsp");
+            }else{
+                response.sendRedirect("index.jsp");
+                //out.println("Invalid Admin Credentials");
+            }
+        }else if(utype.equals("buyer")){
             
-            ps.setString(1, s1);
-            ps.setString(2, s2);
-            ps.setString(3, s3);
-            ps.setString(4, s4);
-            ps.setString(5, s5);
-            ps.executeUpdate();
-            out.println("REGISTRATION COMPLETED");
-        }catch(Exception e){
-            out.println(e);
-        }
+            String sql="SELECT * FROM users where email=? AND password=?";     
+            try{
+                Connection con=Data.connect();
+                PreparedStatement ps=con.prepareStatement(sql);
+                ps.setString(1, email);
+                ps.setString(2, password);
+                ResultSet rs=ps.executeQuery();
+                boolean b=rs.next();
+                if(b==true){
+                   response.sendRedirect("buyerpage.jsp");
+                }else{
+                    response.sendRedirect("index.jsp");
+                }
+                con.close();
+            }catch(Exception e){
+                out.println(e);
+            }
+          }
         
         
-        //provides the response
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

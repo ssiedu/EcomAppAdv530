@@ -27,6 +27,6 @@
             </table>
         </form>
         <hr>
-        <a href="registration.jsp">New-User</a>
+        <a href="index.jsp">Home</a>
     </body>
 </html>

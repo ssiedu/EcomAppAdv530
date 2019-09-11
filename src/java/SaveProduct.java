@@ -1,14 +1,13 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SaveUser extends HttpServlet {
+public class SaveProduct extends HttpServlet {
 
     private Connection con;
     private PreparedStatement ps;
@@ -16,7 +15,7 @@ public class SaveUser extends HttpServlet {
     public void init(){
         try{
             con=Data.connect();
-            String sql="insert into users values(?,?,?,?,?)";
+            String sql="insert into products values(?,?,?,?,?)";
             ps=con.prepareStatement(sql);        
         }catch(Exception e){
             e.printStackTrace();
@@ -37,21 +36,29 @@ public class SaveUser extends HttpServlet {
         PrintWriter out=response.getWriter();
         
         //reads the request
-        String s1=request.getParameter("email");
-        String s2=request.getParameter("password");
-        String s3=request.getParameter("name");
-        String s4=request.getParameter("address");
-        String s5=request.getParameter("mobile");
+        String s1=request.getParameter("pcode");
+        String s2=request.getParameter("pname");
+        String s3=request.getParameter("pdesc");
+        String s4=request.getParameter("pcat");
+        String s5=request.getParameter("price");
         //process the request
         try{
             
-            ps.setString(1, s1);
+            ps.setInt(1, Integer.parseInt(s1));
             ps.setString(2, s2);
             ps.setString(3, s3);
             ps.setString(4, s4);
-            ps.setString(5, s5);
+            ps.setInt(5, Integer.parseInt(s5));
             ps.executeUpdate();
-            out.println("REGISTRATION COMPLETED");
+            out.println("<html>");
+            out.println("<body>");
+            out.println("<hr>");
+            out.println("<h3>Product-Successfully-Added</h3>");
+            out.println("<h4><a href=adminpage.jsp>AdminPage</a></h4>");
+            out.println("<h4><a href=productentry.jsp>Add-More</a></h4>");
+            out.println("<hr>");
+            out.println("</body>");
+            out.println("</html>");
         }catch(Exception e){
             out.println(e);
         }
