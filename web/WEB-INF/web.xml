@@ -12,6 +12,10 @@
         <servlet-name>SaveProduct</servlet-name>
         <servlet-class>SaveProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CategoryPage</servlet-name>
+        <servlet-class>CategoryPage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SaveUser</servlet-name>
         <url-pattern>/SaveUser</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>SaveProduct</servlet-name>
         <url-pattern>/SaveProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryPage</servlet-name>
+        <url-pattern>/CategoryPage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

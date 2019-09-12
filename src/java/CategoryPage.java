@@ -2,61 +2,43 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SaveUser extends HttpServlet {
+public class CategoryPage extends HttpServlet {
 
-    private Connection con;
-    private PreparedStatement ps;
-    
-    public void init(){
-        try{
-            con=Data.connect();
-            String sql="insert into users values(?,?,?,?,?)";
-            ps=con.prepareStatement(sql);        
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    public void destroy(){
-        try{
-            con.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         PrintWriter out=response.getWriter();
-        
-        //reads the request
-        String s1=request.getParameter("email");
-        String s2=request.getParameter("password");
-        String s3=request.getParameter("name");
-        String s4=request.getParameter("address");
-        String s5=request.getParameter("mobile");
-        //process the request
         try{
+            Connection con=Data.connect();
+            String sql="SELECT DISTINCT pcat FROM products ORDER BY pcat";
+            PreparedStatement ps=con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            out.println("<html>");
+            out.println("<body>");
+            out.println("<h3>Select Desired Category</h3>");
+            out.println("<hr>");
+            while(rs.next()){
+                String s=rs.getString(1);
+                out.println("<a href=ProductList>");
+                out.println(s);
+                out.println("</a>");
+                out.println("<br>");
+            }
+            out.println("<hr>");
+            out.println("<a href=buyerpage.jsp>BuyerPage</a>");
+            out.println("</body>");
+            out.println("</html>");
             
-            ps.setString(1, s1);
-            ps.setString(2, s2);
-            ps.setString(3, s3);
-            ps.setString(4, s4);
-            ps.setString(5, s5);
-            ps.executeUpdate();
-            out.println("REGISTRATION COMPLETED");
         }catch(Exception e){
             out.println(e);
         }
         
         
-        //provides the response
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
