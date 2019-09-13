@@ -8,35 +8,46 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CategoryPage extends HttpServlet {
+public class ProductList extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out=response.getWriter();
+        String s=request.getParameter("ct");
+        String sql="SELECT pcode, pname FROM products WHERE pcat=?";
         try{
             Connection con=Data.connect();
-            String sql="SELECT DISTINCT pcat FROM products ORDER BY pcat";
             PreparedStatement ps=con.prepareStatement(sql);
+            ps.setString(1, s);
             ResultSet rs=ps.executeQuery();
             out.println("<html>");
             out.println("<body>");
-            out.println("<h3>Select Desired Category</h3>");
+            out.println("<h3>Select Desired Product</h3>");
             out.println("<hr>");
             while(rs.next()){
-                String s=rs.getString(1);
-                out.println("<a href=ProductList?ct="+s+">");
-                out.println(s);
+                String s1=rs.getString(1);
+                String s2=rs.getString(2);
+                out.println("<a href=ProductDetails?code="+s1+">");
+                out.println(s2);
                 out.println("</a>");
                 out.println("<br>");
             }
             out.println("<hr>");
-            out.println("<a href=buyerpage.jsp>BuyerPage</a>");
+            out.println("<a href=CategoryPage>Categories</a><br>");
+            out.println("<a href=buyerpage.jsp>BuyerPage</a><br>");
             out.println("</body>");
             out.println("</html>");
+            
+            con.close();
+            
+            
+            
+            
             
         }catch(Exception e){
             out.println(e);
         }
+        
         
         
     }
