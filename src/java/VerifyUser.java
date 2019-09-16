@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +37,21 @@ public class VerifyUser extends HttpServlet {
                 ResultSet rs=ps.executeQuery();
                 boolean b=rs.next();
                 if(b==true){
+                    
+                    String ch=request.getParameter("c1");
+                    if(ch!=null){
+                        //step-1 (create cookie object)
+                        Cookie c1=new Cookie("id",email);
+                        Cookie c2=new Cookie("pw",password);
+                        //step-2 (set the maximum age)
+                        c1.setMaxAge(60*60*24*7);
+                        c2.setMaxAge(60*60*24*7);
+                        //step-3 (add cookie to response)
+                        response.addCookie(c1);
+                        response.addCookie(c2);
+                    }
+                    
+                    
                    response.sendRedirect("buyerpage.jsp");
                 }else{
                     response.sendRedirect("index.jsp");
