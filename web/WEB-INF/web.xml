@@ -24,6 +24,10 @@
         <servlet-name>ProductDetails</servlet-name>
         <servlet-class>ProductDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EndSession</servlet-name>
+        <servlet-class>EndSession</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SaveUser</servlet-name>
         <url-pattern>/SaveUser</url-pattern>
@@ -48,9 +52,13 @@
         <servlet-name>ProductDetails</servlet-name>
         <url-pattern>/ProductDetails</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EndSession</servlet-name>
+        <url-pattern>/EndSession</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            2
         </session-timeout>
     </session-config>
 </web-app>

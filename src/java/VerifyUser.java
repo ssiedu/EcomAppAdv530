@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class VerifyUser extends HttpServlet {
 
@@ -37,6 +38,17 @@ public class VerifyUser extends HttpServlet {
                 ResultSet rs=ps.executeQuery();
                 boolean b=rs.next();
                 if(b==true){
+                    
+                    //storing email in session
+                    
+                    //step-1 (fetch the sessio)
+                    HttpSession session=request.getSession();
+                    //step-2 (store the data in session)
+                    session.setAttribute("user", email);
+                    
+                    
+                    
+                    
                     
                     String ch=request.getParameter("c1");
                     if(ch!=null){

@@ -1,4 +1,7 @@
 <%
+    //session.setMaxInactiveInterval(150);
+    
+    
     String v1="",v2="";
     
     //step-1 (read all the cookies coming with request
