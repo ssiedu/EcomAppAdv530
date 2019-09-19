@@ -30,7 +30,7 @@
                 <td>Password</td><td><input type="password" name="password" value="<%=v2%>"/></td>
             </tr>
             <tr>
-                <td>Usertype</td><td><select name="utype"><option>admin</option><option>buyer</option></select></td>
+                <td>Usertype</td><td><select name="utype"><option>buyer</option><option>admin</option></select></td>
             </tr>
             <tr>
                 <td>Save Password</td><td><input type="checkbox" name="c1" value="yes" checked="checked"></td>

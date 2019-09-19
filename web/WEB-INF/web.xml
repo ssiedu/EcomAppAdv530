@@ -28,6 +28,14 @@
         <servlet-name>EndSession</servlet-name>
         <servlet-class>EndSession</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartManager</servlet-name>
+        <servlet-class>CartManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayCart</servlet-name>
+        <servlet-class>DisplayCart</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SaveUser</servlet-name>
         <url-pattern>/SaveUser</url-pattern>
@@ -56,9 +64,17 @@
         <servlet-name>EndSession</servlet-name>
         <url-pattern>/EndSession</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartManager</servlet-name>
+        <url-pattern>/CartManager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayCart</servlet-name>
+        <url-pattern>/DisplayCart</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            2
+            30
         </session-timeout>
     </session-config>
 </web-app>

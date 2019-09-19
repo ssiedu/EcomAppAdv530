@@ -1,8 +1,4 @@
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.HashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,52 +6,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class CategoryPage extends HttpServlet {
+public class CartManager extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int n=0;
-        //reading the email of user from session
-        //step-1 (fetch the session object)
+        
+        //reading the code of the product user is purchasing
+        String code=request.getParameter("code");
+        //store that to session
         HttpSession session=request.getSession();
-        //step-2 (read the data from session)
-        String user=(String) session.getAttribute("user");
-        if(user==null){
-            response.sendRedirect("index.jsp");
-        }
-        
         HashSet<String> set=(HashSet<String>) session.getAttribute("cart");
-        if(set!=null){
-            n=set.size();
+        if(set==null){
+            set=new HashSet<String>();
         }
+        set.add(code);//stored the pcode to collection
+        //store the collection to session
+        session.setAttribute("cart", set);
+        response.sendRedirect("CategoryPage");
         
-        PrintWriter out=response.getWriter();
-        try{
-            Connection con=Data.connect();
-            String sql="SELECT DISTINCT pcat FROM products ORDER BY pcat";
-            PreparedStatement ps=con.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
-            out.println("<html>");
-            out.println("<body>");
-            out.println("<h3>Welcome "+user+"</h3>");
-            out.println("<h3>Select Desired Category</h3>");
-            out.println("<hr>");
-            while(rs.next()){
-                String s=rs.getString(1);
-                out.println("<a href=ProductList?ct="+s+">");
-                out.println(s);
-                out.println("</a>");
-                out.println("<br>");
-            }
-            out.println("<hr>");
-            out.println("<h5>Total Products : "+n+"</h5>");
-            out.println("<a href=buyerpage.jsp>BuyerPage</a>");
-            out.println("</body>");
-            out.println("</html>");
-            
-        }catch(Exception e){
-            out.println(e);
-        }
+        
         
         
     }
