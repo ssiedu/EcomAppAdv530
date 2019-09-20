@@ -1,5 +1,8 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,9 +29,51 @@ public class DisplayCart extends HttpServlet {
             out.println("<h4><a href=CategoryPage>Start-Buying</a></h4>");
         }else{
             out.println("<h3>Your Product Codes</h3>");
-            for(String item:set){
-                out.println(item+"<br>");
+            String sql="SELECT * FROM PRODUCTS WHERE PCODE IN "+set;
+            sql=sql.replace('[', '(');
+            sql=sql.replace(']', ')');
+            try{
+                Connection con=Data.connect();
+                PreparedStatement ps=con.prepareStatement(sql);
+                ResultSet rs=ps.executeQuery();
+                out.println("<table border=2>");
+                out.println("<tr>");
+                out.println("<th>Code</th>");
+                out.println("<th>Name</th>");
+                out.println("<th>Desc</th>");
+                out.println("<th>Catg</th>");
+                out.println("<th>Price</th>");
+                out.println("</tr>");
+                int sum=0;
+                while(rs.next()){
+                    String s1=rs.getString(1);
+                    String s2=rs.getString(2);
+                    String s3=rs.getString(3);
+                    String s4=rs.getString(4);
+                    int s5=rs.getInt(5);
+                    sum=sum+s5;
+                    out.println("<tr>");
+                    out.println("<td>"+s1+"</td>");
+                    out.println("<td>"+s2+"</td>");
+                    out.println("<td>"+s3+"</td>");
+                    out.println("<td>"+s4+"</td>");
+                    out.println("<td align=right>"+s5+"</td>");
+                    out.println("<td><a href=RemoveProduct?code="+s1+">X</a></td>");
+                    out.println("</tr>");
+                }
+                out.println("<tr>");
+                out.println("<td></td><td></td><td></td>");
+                out.println("<td>Total</td>");
+                out.println("<td>"+sum+"</td>");
+                out.println("</tr>");
+                out.println("</table>");
+                con.close();
+            }catch(Exception e){
+                out.println(e);
             }
+            
+            
+            
             out.println("<hr>");
             out.println("<h4><a href=CategoryPage>Add-More-Products</a></h4>");
         }
