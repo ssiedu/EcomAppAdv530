@@ -1,3 +1,4 @@
+<%@include file="header.jsp" %>
 <%
     String user=(String)session.getAttribute("user");
     

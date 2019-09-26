@@ -1,3 +1,4 @@
+<%@include file="header.jsp" %>
 <html>
     <body>
         <h3>Product-Search-Form</h3>
@@ -10,3 +11,4 @@
         <a href="buyerpage.jsp">Home</a>
     </body>
 </html>
+<%@include  file="footer.jsp" %>

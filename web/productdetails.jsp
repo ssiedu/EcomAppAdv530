@@ -1,5 +1,8 @@
+<%@page isThreadSafe="false"  errorPage="myerrors.jsp"  language="java" contentType="text/html" import="java.sql.*, java.util.Stack" %>
+
+
 <%!
-    
+        Stack stk;
         public int highDis=20;
         int getDiscount(int price){
             int discount=0;
@@ -16,7 +19,7 @@
     int code=Integer.parseInt(request.getParameter("t1"));
     Class.forName("com.mysql.jdbc.Driver");
     String url="jdbc:mysql://localhost:3306/ecomdata";
-    java.sql.Connection con=java.sql.DriverManager.getConnection(url, "root","root");
+    Connection con=DriverManager.getConnection(url, "root","root");
     String sql="select * from products where pcode=?";
     java.sql.PreparedStatement ps=con.prepareStatement(sql);
     ps.setInt(1, code);

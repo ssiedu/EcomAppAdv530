@@ -40,6 +40,10 @@
         <servlet-name>RemoveProduct</servlet-name>
         <servlet-class>RemoveProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Demo</servlet-name>
+        <servlet-class>Demo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SaveUser</servlet-name>
         <url-pattern>/SaveUser</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>RemoveProduct</servlet-name>
         <url-pattern>/RemoveProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Demo</servlet-name>
+        <url-pattern>/Demo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

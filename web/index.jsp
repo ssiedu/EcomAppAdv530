@@ -1,3 +1,6 @@
+<%@include  file="header.jsp" %>
+
+
 <%
     //session.setMaxInactiveInterval(150);
     
