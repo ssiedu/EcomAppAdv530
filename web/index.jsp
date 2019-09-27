@@ -1,5 +1,6 @@
-<%@include  file="header.jsp" %>
+<%@taglib  uri="/WEB-INF/tlds/mylib.tld" prefix="sample" %>
 
+<sample:info/>
 
 <%
     //session.setMaxInactiveInterval(150);
